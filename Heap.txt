@@ -1,0 +1,76 @@
+#include <string.h>
+#include <iostream>
+
+double upper(int i, char *textPtr);
+
+int main()
+{
+    char ch, tmp;
+    char* textPtr = NULL;
+    char* textPtrAccessory = NULL;
+    int length = 0;
+    int count = 0;
+
+    textPtr = (char*)malloc(sizeof(char) * 1);
+
+    fflush(stdout);
+
+    while (((ch = getchar()) != '\n') && (ch != EOF))
+    {
+        textPtr[length] = ch;
+        length++;
+        count += 1;
+
+        textPtrAccessory = (char*)realloc(textPtrAccessory, sizeof(char) * length * 2);
+        if (textPtrAccessory != NULL)
+        {
+            textPtr = textPtrAccessory;
+        }
+        else
+        {
+            printf("Program operation failed! \n");
+        }
+    }
+
+    textPtrAccessory = (char*)realloc(textPtrAccessory, sizeof(char) * count+1);
+    if (textPtrAccessory != NULL)
+    {
+        textPtr = textPtrAccessory;
+    }
+    else
+    {
+        printf("Program operation failed! \n");
+    }
+
+    for (int i = 0; i < count; i++)
+    {
+        for (int j = i + 1; j < count-1; j++)
+        {
+
+            if (upper(j, textPtr) < upper(i, textPtr))
+            {
+                tmp = textPtr[i];
+                textPtr[i] = textPtr[j];
+                textPtr[j] = tmp;
+            }
+        }
+    }
+    for (int i = 0; i <= count; i++)
+        printf("%c", textPtr[i]);
+    printf(" \n");
+    return 0;
+}
+double upper(int i, char *textPtr)
+{
+    double a;
+
+    if (textPtr[i] < 97)
+    {
+        a = textPtr[i] + 31.5;
+    }
+    else
+    {
+        a = textPtr[i];
+    }
+    return a;
+}
